@@ -1,0 +1,49 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Thông tin người dùng hệ thống",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "email": { "type": "string", "description": "Email người dùng" },
+        "displayName": { "type": "string", "description": "Tên hiển thị" },
+        "role": { "type": "string", "enum": ["admin", "user"], "description": "Vai trò (admin hoặc user)" },
+        "department": { "type": "string", "description": "Đơn vị công tác" },
+        "block": { "type": "string", "description": "Khối cơ quan" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "Nhiệm vụ KPI",
+      "type": "object",
+      "properties": {
+        "documentNumber": { "type": "string" },
+        "summary": { "type": "string" },
+        "documentDate": { "type": "string", "format": "date-time" },
+        "assignedDate": { "type": "string", "format": "date-time" },
+        "deadline": { "type": "string", "format": "date-time" },
+        "completionDate": { "type": "string", "format": "date-time" },
+        "assignee": { "type": "string" },
+        "assigneeUid": { "type": "string" },
+        "block": { "type": "string" },
+        "department": { "type": "string" },
+        "status": { "type": "string", "enum": ["NOT_STARTED", "IN_PROGRESS", "COMPLETED", "OVERDUE"] },
+        "createdBy": { "type": "string", "description": "UID người tạo" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["documentNumber", "summary", "deadline", "status", "createdBy"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Thông tin chi tiết người dùng"
+    },
+    "/tasks/{taskId}": {
+      "schema": "Task",
+      "description": "Danh sách nhiệm vụ"
+    }
+  }
+}
